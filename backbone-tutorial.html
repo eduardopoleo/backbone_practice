@@ -6,9 +6,16 @@
   <title>Hello World in Backbone.js</title>
 </head>
 <body>
-  <!-- ========= -->
-  <!-- Your HTML -->
-  <!-- ========= -->
+
+  <section id="todoapp">
+   <header id="header">
+     <h1>Todos</h1>
+     <input id="new-todo" placeholder="What needs to be done?">
+   </header>
+   <section id="main">
+     <ul id="todo-list"></ul>
+   </section>
+ </section>
 
   <!-- ========= -->
   <!-- Libraries -->
@@ -22,8 +29,56 @@
   <!-- Javascript code -->
   <!-- =============== -->
   <script type="text/javascript">
-    // your JS code goes here
+    var app = {};
+
+    app.Todo = Backbone.Model.extend({
+      //Defaults values for the todo properties
+      defaults: {
+        title: '',
+        completed: false
+      }
+    });
+
+    //after defining the models I can start building js objects in the console.
+    // var todo = new app.Todo({title: 'Learn Backbone.js', completed: false}); // create object with the attributes specified.
+    // todo.get('title'); // "Learn Backbone.js"
+    // todo.get('completed'); // false
+    // todo.get('created_at'); // undefined
+    // todo.set('created_at', Date());
+    // todo.get('created_at'); /
+
+    app.TodoList = Backbone.Collection.extend({
+      model: app.Todo,
+      localStorage: new Store("backbone-todo")
+    });
+
+    app.todoList = new app.TodoList();
+
+    // In the dev tools we could run
+
+    // var todoList = new app.TodoList()
+    // todoList.create({title: 'Learn Backbone\'s Collection'});  Apparently we can add objest to our collection from the collection irself
+    // var lmodel = new app.Todo({title: 'Learn Models', completed: true});  by instantiating it
+    // todoList.add(lmodel); and then adding it
+    // todoList.pluck('title'); this I think is just
+    // todoList.pluck('completed');
+    // JSON.stringify(todoList);
+
+    var AppView = Backbone.View.extend({
+      el: '#container',
+
+      initialize: function(){
+        this.render();
+      },
+
+      render: function(){
+        this.$el.html("Hello World");
+      }
+    });
   </script>
 
 </body>
+QUESTIONS:
+Creating models from the collection itself
+wierd views templates ?? handle_bar stuff?
 </html>
